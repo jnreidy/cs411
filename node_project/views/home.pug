@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1 {Undecided Project Name}
+  p.lead A Platform for News Outlet Text Analysis
+  hr
+  .row
+    .col-sm-6
+      h2 What We Do
+      p {Undecided Project Name} is a platform for news outlet text analysis. With our platform, users can view articles from various news outlets and gather data about the article's text. Users can search for types of articles based on certain sentiments, or they can provide a link to an article and perform a sentiment analysis on it.
+      p Sounds interesting, right?
+      p
+        a.btn.btn-default(href='/signup', role='button') Get Started!
+    .col-sm-6
+      h2 How We Do It
+      p To provide sentiment analyses, we take advantage of IBM Watson's AlchemyLanguage API, which is an extremely powerful language processor.
+      p AlchemyLanguage is a collection of APIs that offer text analysis through natural language processing. The AlchemyLanguage APIs can analyze text and help you to understand its sentiment, keywords, entities, high-level concepts and more.
+      p AlchemyLanguage offers several API functions as part of its text analysis service, each of which uses sophisticated natural language processing techniques to analyze your content. 
+      p We use a host of news outlet APIs to gather articles, which we then perform sentiment analysis on. These outlets vary in terms of political stance and types of articles they produce. Watson doesn't care what type of article it is, it gives us a raw, unbiased analysis.
+      p
+        a.btn.btn-default(name='watson_info_btn' href='https://www.ibm.com/watson/developercloud/alchemy-language.html', role='button') AlchemyLanguage Page »
+  
