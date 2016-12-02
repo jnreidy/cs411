@@ -35,7 +35,7 @@ exports.postContact = (req, res) => {
   }
 
   const mailOptions = {
-    to: 'your@email.com',
+    to: 'rkearns@bu.edu',
     from: `${req.body.name} <${req.body.email}>`,
     subject: 'Contact Form | {Undecided Project Name}',
     text: req.body.message

@@ -1,8 +1,9 @@
 const async = require('async');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const passport = require('passport');
 const User = require('../models/User');
+const passport = require('passport');
+
 
 /**
  * GET /login
@@ -62,7 +63,7 @@ exports.logout = (req, res) => {
  */
 exports.getSignup = (req, res) => {
   if (req.user) {
-    return res.redirect('/');
+    return res.redirect('/search');
   }
   res.render('account/signup', {
     title: 'Create Account'
@@ -194,23 +195,6 @@ exports.postDeleteAccount = (req, res, next) => {
   });
 };
 
-/**
- * GET /account/unlink/:provider
- * Unlink OAuth provider.
- */
-exports.getOauthUnlink = (req, res, next) => {
-  const provider = req.params.provider;
-  User.findById(req.user.id, (err, user) => {
-    if (err) { return next(err); }
-    user[provider] = undefined;
-    user.tokens = user.tokens.filter(token => token.kind !== provider);
-    user.save((err) => {
-      if (err) { return next(err); }
-      req.flash('info', { msg: `${provider} account has been unlinked.` });
-      res.redirect('/account');
-    });
-  });
-};
 
 /**
  * GET /reset/:token
@@ -356,7 +340,7 @@ exports.postForgot = (req, res, next) => {
       });
       const mailOptions = {
         to: user.email,
-        from: 'hackathon@starter.com',
+        from: 'support@{Undecided Project Name}.com',
         subject: 'Reset your password on {Undecided Project Name}',
         text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
           Please click on the following link, or paste this into your browser to complete the process:\n\n
