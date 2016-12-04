@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    h1 #{title}
+    h3 Processed #{type} Analysis
+    h4
+        a(href=text.url) #{text.url}
+    h3 URL Text
+    p #{text.text}
+    h3 Sentiment
+    p Sentiment is the attitude, opinion or feeling toward something, such as a person, organization, product or location. AlchemyAPI's sentiment analysis API provides easy-to-use mechanisms to identify the positive or negative sentiment within any document or webpage.
+    p Sentiment analysis API is capable of computing document-level sentiment, sentiment for user-specified targets, entity-level sentiment, quotation-level sentiment, directional-sentiment and keyword-level sentiment. These multiple modes of sentiment analysis provide for a variety of use cases ranging from social media monitoring to trend analysis.
+
+    p AlchemyAPI's sentiment analysis algorithm looks for words that carry a positive or negative connotation then figures out which person, place or thing they are referring to. It also understands negations (i.e. "this car is good" vs. "this car is not good") and modifiers (i.e. "this car is good" vs. "this car is really good"). The sentiment analysis API works on documents large and small, including news articles, blog posts, product reviews, comments and Tweets.
+
+    p Overall Article Sentiment Score:
+        strong #{sentiment.type} : #{sentiment.score}
+

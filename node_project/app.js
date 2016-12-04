@@ -22,10 +22,12 @@ const multer = require('multer');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
+
+
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.example' });
+dotenv.load({ path: '.env' });
 
 /**
  * Controllers (route handlers).
@@ -83,13 +85,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use((req, res, next) => {
-  if (req.path === '/api/upload') {
-    next();
-  } else {
-    lusca.csrf()(req, res, next);
-  }
-});
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use((req, res, next) => {
@@ -112,6 +107,8 @@ app.use((req, res, next) => {
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
+
+
 /**
  * Primary app routes.
  */
@@ -121,8 +118,6 @@ app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
 app.get('/forgot', userController.getForgot);
 app.post('/forgot', userController.postForgot);
-app.get('/reset/:token', userController.getReset);
-app.post('/reset/:token', userController.postReset);
 app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);
@@ -131,8 +126,36 @@ app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated,  userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
+
 app.get('/search', passportConfig.isAuthenticated, searchController.getSearch);
 
+app.get('/search', passportConfig.isAuthenticated, searchController.getSearch);
+
+app.post('/search', searchController.postSearch);
+
+
+
+
+
+/**
+ * Alchemy stuff
+ */
+
+var demo_url = 'http://www.huffingtonpost.com/2010/06/22/iphone-4-review-the-worst_n_620714.html';
+
+function example(req, res) {
+  var output = {};
+
+  //Start the analysis chain
+  text(req, res, output);
+}
+
+function text(req, res, output) {
+  alchemyapi.text('url', demo_url, {}, function(response) {
+    output['text'] = { url:demo_url, response:JSON.stringify(response,null,4), results:response };
+    console.log(output)
+  });
+}
 
 /**
  * Error Handler.
