@@ -126,36 +126,14 @@ app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated,  userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
+app.post('/account/favorites', passportConfig.isAuthenticated, userController.postAddFavorite);
+app.post('/account/favorites/delete', passportConfig.isAuthenticated, userController.postDeleteFavorite);
+
 
 app.get('/search', passportConfig.isAuthenticated, searchController.getSearch);
-
-app.get('/search', passportConfig.isAuthenticated, searchController.getSearch);
-
 app.post('/search', searchController.postSearch);
 
 
-
-
-
-/**
- * Alchemy stuff
- */
-
-var demo_url = 'http://www.huffingtonpost.com/2010/06/22/iphone-4-review-the-worst_n_620714.html';
-
-function example(req, res) {
-  var output = {};
-
-  //Start the analysis chain
-  text(req, res, output);
-}
-
-function text(req, res, output) {
-  alchemyapi.text('url', demo_url, {}, function(response) {
-    output['text'] = { url:demo_url, response:JSON.stringify(response,null,4), results:response };
-    console.log(output)
-  });
-}
 
 /**
  * Error Handler.

@@ -183,6 +183,82 @@ exports.postUpdatePassword = (req, res, next) => {
 };
 
 /**
+ * POST /account/favorites
+ * Add a favorite
+ */
+
+exports.postAddFavorite = (req, res, next) => {
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+      req.flash('errors', errors);
+      return res.redirect('/account');
+    }
+
+    var dup = false;
+
+    User.findById(req.user.id, (err, user) => {
+      if (err) { return next(err); }
+      for (i = 0; i < user.favorites.length; i++) {
+        if (user.favorites[i]['url'] === req.body.favorite_url) {
+          console.log("duplicate: ", req.body.favorite_url);
+          dup = true;
+        }
+    }
+
+    if (dup !== true){
+      user.favorites.unshift({url: req.body.favorite_url, title: req.body.favorite_title});
+      user.save((err) => {
+        if (err) { return next(err); }
+        req.flash('success', { msg: 'Article has been added to favorites!' });
+      res.redirect(req.session.returnTo || '/account#favorites');
+    });
+
+    }else {
+      user.save((err) => {
+        if (err) { return next(err); }
+        req.flash('info', { msg: 'Duplicate Article NOT added to favorites' });
+      res.redirect('/account');
+    });
+    }
+
+  });
+  };
+
+/**
+ * POST /account/favorites
+ * Remove a favorite
+ */
+
+exports.postDeleteFavorite = (req, res, next) => {
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('errors', errors);
+    return res.redirect('/account');
+  }
+
+  User.findById(req.user.id, (err, user) => {
+    if (err) { return next(err); }
+    for (i = 0; i < user.favorites.length; i++) {
+    if (user.favorites[i]['url'] === req.body.favorite_url) {
+      console.log("duplicate: ", req.body.favorite_url);
+    }
+  }
+
+  user.favorites.splice({url: req.body.favorite_url, title: req.body.favorite_title}, 1);
+  user.save((err) => {
+    if (err) { return next(err); }
+    req.flash('info', { msg: 'Article has been removed from favorites!' });
+  res.redirect(req.session.returnTo || '/account#favorites');
+});
+
+});
+};
+
+/**
  * POST /account/delete
  * Delete user account.
  */
@@ -196,6 +272,7 @@ exports.postDeleteAccount = (req, res, next) => {
 };
 
 
+
 /**
  * GET /reset/:token
  * Reset Password page.
@@ -204,19 +281,18 @@ exports.getReset = (req, res, next) => {
   if (req.isAuthenticated()) {
     return res.redirect('/');
   }
-  User
-    .findOne({ passwordResetToken: req.params.token })
-    .where('passwordResetExpires').gt(Date.now())
-    .exec((err, user) => {
-      if (err) { return next(err); }
-      if (!user) {
-        req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
-        return res.redirect('/forgot');
-      }
-      res.render('account/reset', {
-        title: 'Password Reset'
-      });
-    });
+  User.findOne({ passwordResetToken: req.params.token })
+      .where('passwordResetExpires').gt(Date.now())
+      .exec((err, user) => {
+    if (err) { return next(err); }
+    if (!user) {
+    req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
+    return res.redirect('/forgot');
+  }
+  res.render('account/reset', {
+    title: 'Password Reset'
+  });
+});
 };
 
 /**

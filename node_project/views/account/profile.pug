@@ -70,3 +70,23 @@ block content
         button.btn.btn-danger(type='submit')
           i.fa.fa-trash
           | Delete my account
+
+  h3 Favorite Articles
+  hr
+  if user.favorites.length < 1
+    p You do not have any favorited articles.
+  else
+    table.table.table-striped.table-bordered
+      thead
+      tbody
+        for favorite in user.favorites
+          tr
+            td.col-sm-10
+              a(href=favorite.url).col-sm-12 #{favorite.title}
+            td.col-sm-2
+              form.col-sm-12.form-horizontal(method='POST' action='/account/favorites/delete')
+                input(type='hidden', name='_csrf', value=_csrf)
+                .form-group
+                  button.col-sm-12.btn.btn-warning(type='submit')
+                    i.fa.fa-trash
+                    | Remove from Favorites
