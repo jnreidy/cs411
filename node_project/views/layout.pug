@@ -6,9 +6,11 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='theme-color' content='#4DA5F4')
     meta(name='csrf-token', content=_csrf)
-    title #{title} - {Undecided Project Name}
+    title #{title} - {News Nerd}
     link(rel='shortcut icon', href='favicon.png')
     link(rel='stylesheet', href='/css/main.css')
+
+
 
   body
     include partials/header
@@ -22,3 +24,6 @@ html(lang='en')
     script(src='/js/lib/jquery-2.2.4.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src='/js/lib/angular.min.js')
+    script(src='/js/lib/instantclick.min.js', data-no-instant)
+    script(data-no-instant).
+      InstantClick.init();

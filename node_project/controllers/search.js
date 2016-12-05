@@ -12,7 +12,7 @@ const alchemyapi = new AlchemyAPI();
 
 exports.loadTrendingArticles = (req, res, next) => {
 
-    const key = process.env.NEWSAPIORGKEY;
+   /* const key = process.env.NEWSAPIORGKEY;
 
     var options = { method: 'GET',
         url: 'https://newsapi.org/v1/articles',
@@ -29,7 +29,35 @@ exports.loadTrendingArticles = (req, res, next) => {
         articles = body['articles'];
         console.log(articles.length);
     });
-    return articles;
+    return articles; */
+
+    exports.loadTrendingArticles = (req, res, next) => {
+
+        const key = '098e9d1b63db3118deb432b1efb4c7d021221f47';
+        const resource = 'https://gateway-a.watsonplatform.net/calls/data/';
+        var call = resource + 'GetNews?apikey=' + key + '&count=20&rank=high&start=now-6h&end=now&outputMode=json&return=enriched.url.url,enriched.url.title,enriched.url.docSentiment.score,enriched.url.text'
+
+        request(call, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                /*
+                 the next line should work as long as we do not use all api keys
+                 if concerned about too much usage, use body.json
+                 */
+
+                //var body = JSON.parse(body);
+                console.log('pass')
+            }
+
+            var fs = require('fs');
+            var body = JSON.parse(fs.readFileSync('body.json', 'utf8'));
+
+            articles = body['result']['docs'];
+            return articles;
+        });
+
+        return articles;
+    }
+
 }
 
 exports.getSearch = (req, res, next) => {
@@ -74,7 +102,6 @@ exports.postSearch = (req, res, next) => {
                 text: output['text']['results'],
                 sentiment: output['sentiment']['results']
             });
-            console.log('we got to end of displaySearch');
         }
     }
 
@@ -92,22 +119,6 @@ exports.postSearch = (req, res, next) => {
     if (typeof urlinput !== 'undefined') {
         console.log('You sent the URL: "' + urlinput);
         display(req,res);
-        //display(type);
-        /* output = {};
-        alchemyapi.text('url', urlinput, {}, function(response) {
-            output['text'] = { url:urlinput, response:JSON.stringify(response,null,4), results:response };
-            var todisplay = output['text']['results'];
-
-
-
-            res.render('search/results', {
-                    title: 'Search Results',
-                    type: 'URL',
-                    text: todisplay,
-                    sentiment: emotion
-                }
-            )
-        }); */
 
     } else {
         console.log('Not posting a URL, must be something else.');

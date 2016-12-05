@@ -201,6 +201,7 @@ exports.postAddFavorite = (req, res, next) => {
     User.findById(req.user.id, (err, user) => {
       if (err) { return next(err); }
       for (i = 0; i < user.favorites.length; i++) {
+        console.log('length', user.favorites.length);
         if (user.favorites[i]['url'] === req.body.favorite_url) {
           console.log("duplicate: ", req.body.favorite_url);
           dup = true;

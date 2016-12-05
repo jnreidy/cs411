@@ -130,7 +130,7 @@ app.post('/account/favorites', passportConfig.isAuthenticated, userController.po
 app.post('/account/favorites/delete', passportConfig.isAuthenticated, userController.postDeleteFavorite);
 
 
-app.get('/search', passportConfig.isAuthenticated, searchController.getSearch);
+app.get ('/search', passportConfig.isAuthenticated, searchController.getSearch);
 app.post('/search', searchController.postSearch);
 
 

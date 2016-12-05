@@ -21,30 +21,33 @@ block content
                         thead
                             tr
                                 th.col-sm-3 Headline
-                                th.col.sm-6.hidden-xs Description
+                                th.col.sm-6.hidden-xs Sentiment
+                                th Description
                         tbody
                             for article in topArticles
                                 tr
                                     td.col-sm-4
-                                        a(href=article.url) #{article.title}
-                                    td.col.sm-6.hidden-xs=article.description
+                                        a(href=article.source.enriched.url.url) #{article.source.enriched.url.title}
+                                    td.col.sm-2.hidden-xs=article.source.enriched.url.docSentiment.score
+                                    td.col.sm-4.hidden-xs=article.source.enriched.url.text
                                     td.col-sm-2
                                         .btn-toolbar-align-center(role='group')
                                             form.col-sm-6.form-horizontal(method='POST' action='/account/favorites')
                                                 input(type='hidden', name='_csrf', value=_csrf)
                                                 .form-group
                                                     .col-sm-0
-                                                        input.form-control.hidden(type='text', name='favorite_url', value=article.url)
-                                                        input.form-control.hidden(type='text', name='favorite_title', value=article.title)
+                                                        input.form-control.hidden(type='text', name='favorite_url', value=article.source.enriched.url.url)
+                                                        input.form-control.hidden(type='text', name='favorite_title', value=article.source.enriched.url.title)
                                                     button.col-sm-12.btn.btn-primary(type='submit')
                                                         i.fa.fa-heart
                                             form.col-sm-6.form-horizontal(method='POST' action='/search')
                                                 input(type='hidden', name='_csrf', value=_csrf)
                                                 .form-group
                                                     .col-sm-0
-                                                        input.form-control.hidden(type='text', name='urlinput', value=article.url, id='url', placeholder='Enter a keyword', autofocus)
+                                                        input.form-control.hidden(type='text', name='urlinput', value=article.source.enriched.url.url, id='url', placeholder='Enter a keyword', autofocus)
                                                     button.col-sm-12.btn.btn-primary(type='submit')
                                                         i.fa.fa-plug
+
                 #htab2.tab-pane.fade(role='tabpanel')
                     h3 Keyword Search
                     p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
