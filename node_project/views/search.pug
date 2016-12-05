@@ -2,8 +2,7 @@ extends layout
 
 block content
     h1 #{title}
-    p.lead View trending articles, search by keyword, or choose a sentiment to explore.
-    p.lead Have an article you want to analyze? Pass us the URL!
+    p.lead View trending articles, search by keyword, or pass us a URL to analyze!
     .row
         .col-sm-12
             ul#nav-tabs-wrapper.nav.nav-tabs.nav-tabs-horizontal
@@ -12,23 +11,19 @@ block content
                 li
                     a(href='#htab2', data-toggle='tab') Keyword Search
                 li
-                    a(href='#htab3', data-toggle='tab') Sentiment Search
-                li
-                    a(href='#htab4', data-toggle='tab') URL Search
+                    a(href='#htab3', data-toggle='tab') URL Search
             .tab-content
                 #htab1.tab-pane.fade.in.active(role='tabpanel')
                     table.table.table-striped.table-bordered
                         thead
                             tr
                                 th.col-sm-3 Headline
-                                th.col.sm-6.hidden-xs Sentiment
                                 th Description
                         tbody
                             for article in topArticles
                                 tr
                                     td.col-sm-4
                                         a(href=article.source.enriched.url.url) #{article.source.enriched.url.title}
-                                    td.col.sm-2.hidden-xs=article.source.enriched.url.docSentiment.score
                                     td.col.sm-4.hidden-xs=article.source.enriched.url.text
                                     td.col-sm-2
                                         .btn-toolbar-align-center(role='group')
@@ -50,7 +45,7 @@ block content
 
                 #htab2.tab-pane.fade(role='tabpanel')
                     h3 Keyword Search
-                    p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    p Search for articles based on keywords
                     #keyword-search
                         form.form-horizontal(method='POST' action='/search')
                             input(type='hidden', name='_csrf', value=_csrf)
@@ -60,76 +55,15 @@ block content
                                 button.col-sm-2.btn.btn-primary(type='submit')
                                     i.fa.fa-search
                                     | Search
-
                 #htab3.tab-pane.fade.in(role='tabpanel')
-                    h3 Sentiment Search
-                    p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    .row
-                        .col-sm-12
-                            form(action='', data-toggle='validator')
-                                .form.required.col-sm-12
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='1')
-                                            .form-control.form-control-static  Sentiment 1
-                                            span.glyphicon.form-control-feedback
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='0')
-                                            .form-control.form-control-static  Sentiment 2
-                                            span.glyphicon.form-control-feedback
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='0')
-                                            .form-control.form-control-static  Sentiment 3
-                                            span.glyphicon.form-control-feedback
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='0')
-                                            .form-control.form-control-static  Sentiment 4
-                                            span.glyphicon.form-control-feedback
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='0')
-                                            .form-control.form-control-static  Sentiment 5
-                                            span.glyphicon.form-control-feedback
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='0')
-                                            .form-control.form-control-static  Sentiment 6
-                                            span.glyphicon.form-control-feedback
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='0')
-                                            .form-control.form-control-static  Sentiment 7
-                                            span.glyphicon.form-control-feedback
-                                    .form-group.has-feedback
-                                        label.input-group
-                                            span.input-group-addon
-                                                input(type='radio', name='test', value='0')
-                                            .form-control.form-control-static  Sentiment 8
-                                            span.glyphicon.form-control-feedback
-                            .form-group
-                                .col-sm-4
-                                    button.btn.btn-success(type='submit')
-                                        i.fa.fa-user-plus
-                                        | Search
-                #htab4.tab-pane.fade.in(role='tabpanel')
                     h3 URL Search
-                    p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    p Enter the URL of an article to analyze
                         #url-search
                             form.form-horizontal(method='POST' action='/search')
                                 input(type='hidden', name='_csrf', value=_csrf)
                                 .form-group
                                     .col-sm-10
-                                        input.form-control(type='text', name='urlinput', id='keyword', placeholder='Enter a keyword', autofocus, required)
+                                        input.form-control(type='text', name='urlinput', id='keyword', placeholder='http://www.pdonham', autofocus, required)
                                     button.col-sm-2.btn.btn-primary(type='submit')
                                         i.fa.fa-search
                                         | Search

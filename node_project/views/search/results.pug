@@ -2,17 +2,47 @@ extends ../layout
 
 block content
     h1 #{title}
-    h3 Processed #{type} Analysis
-    h4
-        a(href=text.url) #{text.url}
-    h3 URL Text
-    p #{text.text}
-    h3 Sentiment
-    p Sentiment is the attitude, opinion or feeling toward something, such as a person, organization, product or location. AlchemyAPI's sentiment analysis API provides easy-to-use mechanisms to identify the positive or negative sentiment within any document or webpage.
-    p Sentiment analysis API is capable of computing document-level sentiment, sentiment for user-specified targets, entity-level sentiment, quotation-level sentiment, directional-sentiment and keyword-level sentiment. These multiple modes of sentiment analysis provide for a variety of use cases ranging from social media monitoring to trend analysis.
+    h3 Processed #{type.toLowerCase()} Analysis
+    if (type === 'URL')
+        h4
+            a(href=text.url) #{text.url}
+        h3 URL Text
+        p #{text.text}
+        h3 What is Sentiment?
+        p Sentiment is the attitude, opinion or feeling toward something, such as a person, organization, product or location. AlchemyAPI's sentiment analysis API provides easy-to-use mechanisms to identify the positive or negative sentiment within any document or webpage.
+        p Sentiment analysis API is capable of computing document-level sentiment, sentiment for user-specified targets, entity-level sentiment, quotation-level sentiment, directional-sentiment and keyword-level sentiment. These multiple modes of sentiment analysis provide for a variety of use cases ranging from social media monitoring to trend analysis.
 
-    p AlchemyAPI's sentiment analysis algorithm looks for words that carry a positive or negative connotation then figures out which person, place or thing they are referring to. It also understands negations (i.e. "this car is good" vs. "this car is not good") and modifiers (i.e. "this car is good" vs. "this car is really good"). The sentiment analysis API works on documents large and small, including news articles, blog posts, product reviews, comments and Tweets.
-
-    p Overall Article Sentiment Score: 
-        strong #{sentiment.type} : #{sentiment.score}
+        p AlchemyAPI's sentiment analysis algorithm looks for words that carry a positive or negative connotation then figures out which person, place or thing they are referring to. It also understands negations (i.e. "this car is good" vs. "this car is not good") and modifiers (i.e. "this car is good" vs. "this car is really good"). The sentiment analysis API works on documents large and small, including news articles, blog posts, product reviews, comments and Tweets.
+        hr
+        p Overall Article Sentiment Score:
+            strong #{sentiment.results.type} : #{sentiment.results.score}
+    if (type === "KEYWORD")
+        table.table.table-striped.table-bordered
+            thead
+                tr
+                    th.col-sm-3 Headline
+                    th.col.sm-6.hidden-xs Source
+            tbody
+                for article in articles
+                    tr
+                        td.col-sm-4
+                            a(href=article.source.enriched.url.url) #{article.source.enriched.url.title}
+                        td.col.sm-2.hidden-xs=article.source.enriched.url.url
+                        td.col-sm-2
+                            .btn-toolbar-align-center(role='group')
+                                form.col-sm-6.form-horizontal(method='POST' action='/account/favorites')
+                                    input(type='hidden', name='_csrf', value=_csrf)
+                                    .form-group
+                                        .col-sm-0
+                                            input.form-control.hidden(type='text', name='favorite_url', value=article.source.enriched.url.url)
+                                            input.form-control.hidden(type='text', name='favorite_title', value=article.source.enriched.url.title)
+                                        button.col-sm-12.btn.btn-primary(type='submit')
+                                            i.fa.fa-heart
+                                form.col-sm-6.form-horizontal(method='POST' action='/search')
+                                    input(type='hidden', name='_csrf', value=_csrf)
+                                    .form-group
+                                        .col-sm-0
+                                            input.form-control.hidden(type='text', name='urlinput', value=article.source.enriched.url.url, id='url', placeholder='Enter a keyword', autofocus)
+                                        button.col-sm-12.btn.btn-primary(type='submit')
+                                            i.fa.fa-plug
 

@@ -10,6 +10,22 @@
                     "enriched": {
                         "url": {
                             "docSentiment": {
+                                "score": -0.24582
+                            },
+                            "text": "Before you sign up for two years with AT&T, camp out in front of an Apple Store, and fork over $200 (minimum), check out our rundown of the worst things about the iPhone 4...\n",
+                            "title": "iPhone 4 Review: The WORST Things About Apple's New iPhone (PHOTOS) | The Huffington Post",
+                            "url": "http://www.huffingtonpost.com/2010/06/22/iphone-4-review-the-worst_n_620714.html"
+                        }
+                    }
+                },
+                "timestamp": 1480900108
+            },
+            {
+                "id": "MzE0NjI4MTUwNXwxNDgwOTAwMTA4",
+                "source": {
+                    "enriched": {
+                        "url": {
+                            "docSentiment": {
                                 "score": -0.169150993
                             },
                             "text": "GREEN BAY, Wis. (AP)  The Houston Texans slipped and slid over the snow-covered turf at Lambeau Field. They've also lost their grip on the AFC South following a third straight loss. ...",
