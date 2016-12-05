@@ -156,3 +156,6 @@ exports.postSearch = (req, res, next) => {
     }
 }
 
+exports.getDemo = (req, res, next) => {
+    res.render('search/demo_results');
+}

@@ -131,6 +131,8 @@ app.post('/account/favorites/delete', passportConfig.isAuthenticated, userContro
 app.get ('/search', passportConfig.isAuthenticated, searchController.getSearch);
 app.post('/search', searchController.postSearch);
 
+app.get('/search/demo_results', passportConfig.isAuthenticated, searchController.getDemo);
+
 
 
 /**
