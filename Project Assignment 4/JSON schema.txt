@@ -1,0 +1,17 @@
+_id unique identification for each new user in the database
+email - email address given upon signup
+password - encrypted password from user used to sign in user with id "_id"
+favorites - array of articles with url and title that have been favorited by user
+_v - vector corresponding to the length of the favorites[]
+
+
+{
+"_id" : { "$oid" : "5845d1a2fd28f9339c23c92b" }, 
+"updatedAt" : { "$date" : 1480970740972 
+"createdAt" : { "$date" : 1480970658489 }, 
+"email" : "jnreidy@bu.edu", 
+"password" : "$2a$10$XdUGsqM.h7.8fjq1CQBnUeimjyYH9iUJZ8j/CX/vpf7F36ddZ.Rhe", 
+"favorites" : [{ "url" : "http://www.msn.com/en-au/entertainment/watch/trumps-not-enjoying-baldwins-impression-of-him/vi-AAl8at0?srcref=rss", 
+		"title" : "Trump's not enjoying Baldwin's impression of him" }], 
+"__v" : 1 
+}
